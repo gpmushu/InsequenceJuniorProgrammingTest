@@ -14,6 +14,7 @@ namespace InsequenceJuniorProgrammingTest
     {
         public ShipmentPostedForm(string shipmentLabelText, string siteLabelText, string[] containerLabelText)
         {
+            //initialize compoonent using variables from shipment entry form as initial values
             InitializeComponent();
             this.shipmentLabel.Text += shipmentLabelText;
             this.siteLabel.Text += siteLabelText;

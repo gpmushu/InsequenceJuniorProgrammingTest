@@ -13,6 +13,7 @@ namespace InsequenceJuniorProgrammingTest
 {
     public partial class ShipmentEntryForm : Form
     {
+        //declare public variables
         public string shipmentID;
         public string siteName;
         public string[] containerID;
@@ -29,8 +30,10 @@ namespace InsequenceJuniorProgrammingTest
 
         private void postShipmentButton_Click(object sender, EventArgs e)
         {
+            //set site name in variable
             string siteName = siteTextBox.Text;
 
+            //check if shipmentID info is populated
             if (shipmentTextBox.Text == "")
             {
                 MessageBox.Show("Please input a ShipmentID");
@@ -41,15 +44,18 @@ namespace InsequenceJuniorProgrammingTest
             {
                 string shipmentID = shipmentTextBox.Text;
 
+                //check if containerID info is populated
                 if (containerTextBox.Text == "")
                 {
                     MessageBox.Show("Please input a ContainerID");
                     Application.Restart();
                 }
 
+                //validation for numeric only input if checkbox is checked
                 else if (numericCheckBox.Checked == true)
                 {
                     int i;
+                    //loop through lines in containerID text box to check for non-numeric input
                     foreach (string m in containerTextBox.Text.Split(Environment.NewLine.ToArray()))
                     {
                         if (!int.TryParse(m, out i))
@@ -59,6 +65,7 @@ namespace InsequenceJuniorProgrammingTest
                         }
                     }
 
+                    //set additional variables and call second form with variables to initialize
                     string[] containerID = containerTextBox.Text.Split(Environment.NewLine.ToArray());
                     Form shipmentPostedForm = new ShipmentPostedForm(shipmentID, siteName, containerID);
                     shipmentPostedForm.Show();
@@ -67,6 +74,8 @@ namespace InsequenceJuniorProgrammingTest
 
                 else
                 {
+
+                    //set additional variables and call second form with variables to initialize
                     string[] containerID = containerTextBox.Text.Split(Environment.NewLine.ToArray());
                     Form shipmentPostedForm = new ShipmentPostedForm(shipmentID, siteName, containerID);
                     shipmentPostedForm.Show();
