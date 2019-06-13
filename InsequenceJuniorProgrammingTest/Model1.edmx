@@ -1,0 +1,127 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="Model1.Store" Alias="Self" Provider="System.Data.SqlClient" ProviderManifestToken="2012" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityContainer Name="Model1StoreContainer">
+    <EntitySet Name="ShipmentTables" EntityType="Model1.Store.ShipmentTables" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="ContainerTables" EntityType="Model1.Store.ContainerTables" store:Type="Tables" Schema="dbo" />
+    <AssociationSet Name="ContainerTableShipmentTable" Association="Model1.Store.ContainerTableShipmentTable">
+      <End Role="ContainerTable" EntitySet="ContainerTables" />
+      <End Role="ShipmentTable" EntitySet="ShipmentTables" />
+    </AssociationSet>
+  </EntityContainer>
+  <EntityType Name="ShipmentTables">
+    <Key>
+      <PropertyRef Name="ShipmentID" />
+    </Key>
+    <Property Name="ShipmentID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="SiteName" Type="nvarchar(max)" Nullable="true" />
+    <Property Name="ContainerTable_ContainerID" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="ContainerTables">
+    <Key>
+      <PropertyRef Name="ContainerID" />
+    </Key>
+    <Property Name="ContainerID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="ShipmentID" Type="nvarchar(max)" Nullable="false" />
+  </EntityType>
+  <Association Name="ContainerTableShipmentTable">
+    <End Role="ContainerTable" Type="Model1.Store.ContainerTables" Multiplicity="1" />
+    <End Role="ShipmentTable" Type="Model1.Store.ShipmentTables" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="ContainerTable">
+        <PropertyRef Name="ContainerID" />
+      </Principal>
+      <Dependent Role="ShipmentTable">
+        <PropertyRef Name="ContainerTable_ContainerID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+</Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema xmlns="http://schemas.microsoft.com/ado/2009/11/edm" xmlns:cg="http://schemas.microsoft.com/ado/2006/04/codegeneration" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" Namespace="Model1" Alias="Self" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" annotation:UseStrongSpatialTypes="false">
+        <EntityContainer Name="Model1Container" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="ShipmentTables" EntityType="Model1.ShipmentTable" />
+          <EntitySet Name="ContainerTables" EntityType="Model1.ContainerTable" />
+          <AssociationSet Name="ContainerTableShipmentTable" Association="Model1.ContainerTableShipmentTable">
+            <End Role="ContainerTable" EntitySet="ContainerTables" />
+            <End Role="ShipmentTable" EntitySet="ShipmentTables" />
+          </AssociationSet>
+        </EntityContainer>
+        <EntityType Name="ShipmentTable">
+          <Key>
+            <PropertyRef Name="ShipmentID" />
+          </Key>
+          <Property Name="ShipmentID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="SiteName" Type="String" Nullable="true" />
+          <NavigationProperty Name="ContainerTable" Relationship="Model1.ContainerTableShipmentTable" FromRole="ShipmentTable" ToRole="ContainerTable" />
+        </EntityType>
+        <EntityType Name="ContainerTable">
+          <Key>
+            <PropertyRef Name="ContainerID" />
+          </Key>
+          <Property Name="ContainerID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ShipmentID" Type="String" Nullable="false" />
+          <NavigationProperty Name="ShipmentTables" Relationship="Model1.ContainerTableShipmentTable" FromRole="ContainerTable" ToRole="ShipmentTable" />
+        </EntityType>
+        <Association Name="ContainerTableShipmentTable">
+          <End Type="Model1.ContainerTable" Role="ContainerTable" Multiplicity="1" />
+          <End Type="Model1.ShipmentTable" Role="ShipmentTable" Multiplicity="*" />
+        </Association>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+    <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="Model1StoreContainer" CdmEntityContainer="Model1Container">
+    <EntitySetMapping Name="ShipmentTables">
+      <EntityTypeMapping TypeName="IsTypeOf(Model1.ShipmentTable)">
+        <MappingFragment StoreEntitySet="ShipmentTables">
+          <ScalarProperty Name="ShipmentID" ColumnName="ShipmentID" />
+          <ScalarProperty Name="SiteName" ColumnName="SiteName" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="ContainerTables">
+      <EntityTypeMapping TypeName="IsTypeOf(Model1.ContainerTable)">
+        <MappingFragment StoreEntitySet="ContainerTables">
+          <ScalarProperty Name="ContainerID" ColumnName="ContainerID" />
+          <ScalarProperty Name="ShipmentID" ColumnName="ShipmentID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <AssociationSetMapping Name="ContainerTableShipmentTable" TypeName="Model1.ContainerTableShipmentTable" StoreEntitySet="ShipmentTables">
+      <EndProperty Name="ContainerTable">
+        <ScalarProperty Name="ContainerID" ColumnName="ContainerTable_ContainerID" />
+      </EndProperty>
+      <EndProperty Name="ShipmentTable">
+        <ScalarProperty Name="ShipmentID" ColumnName="ShipmentID" />
+      </EndProperty>
+    </AssociationSetMapping>
+  </EntityContainerMapping>
+</Mapping></edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <edmx:Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </edmx:Connection>
+    <edmx:Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="True" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+        <DesignerProperty Name="UseLegacyProvider" Value="False" />
+      </DesignerInfoPropertySet>
+    </edmx:Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>
